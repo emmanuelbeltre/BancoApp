@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637817532326872651
-    m_Hash: 228985270
+      ticks: 637818419434842582
+    m_Hash: 1057529631
   m_LockFileStatus:
     m_FilePath: C:/Users/the_s/OneDrive/Escritorio/Unity/BancoApp/Banco App/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637817532492015093
-    m_Hash: 1587512919
+      ticks: 637818419434852555
+    m_Hash: 1165375285
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:

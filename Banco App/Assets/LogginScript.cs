@@ -27,6 +27,7 @@ public class LogginScript : MonoBehaviour
 	public TMP_Text usuario_iniciado;
 	public TMP_InputField retirar;
 	public  Button retirar_btn;
+	public TMP_Text msg_error;
 	
 	[Header("Variables MainScreen Internas")]
 	public float balance_interno;
@@ -39,7 +40,9 @@ public class LogginScript : MonoBehaviour
 	public string user_dni;
   
   
-	
+	[Header("Variables extras")]
+	float Min;
+	float Max;
   
   
   
@@ -67,8 +70,12 @@ public class LogginScript : MonoBehaviour
 		
 		retirar = GameObject.Find("InputField (TMP) Reterirar").GetComponent<TMP_InputField>();
 		retirar.characterValidation =	TMP_InputField.CharacterValidation.Decimal;
+		//retirar.onValueChanged.AddListener(msg_error.text="");
+		
 		
 		retirar_btn = GameObject.Find("Button Retirar").GetComponent<Button>();
+		msg_error = GameObject.Find("Text (TMP)MsgError").GetComponent<TMP_Text>();
+		
 		
 			//oculto pantallas
 		ActivarScreen(LoginScreen);
@@ -93,7 +100,8 @@ public class LogginScript : MonoBehaviour
 		if (DNI.text =="" || password.text =="")
 		{
 			incorrecto.color= new Color32(10, 255, 76, 136);
-			incorrecto.text ="Complete todos los campos antes de ingresar";
+			incorrecto.text ="Complete todos los campos antes de ingresar.";
+			
 			
 		}
 		
@@ -105,7 +113,7 @@ public class LogginScript : MonoBehaviour
 		{
 			Debug.Log("Hay bobo");
 			incorrecto.color= new Color32(255, 0, 0, 100);
-			incorrecto.text = "ERROR de inicio de sesión, aprende a escribir";
+			incorrecto.text = "ERROR de inicio de sesión, aprende a escribir.";
 		}
 	}
 
@@ -116,16 +124,53 @@ public class LogginScript : MonoBehaviour
 		//balance_interno = float.Parse(balance.text);
 		//retirar_interno = float.Parse(retirar.text);
 		//float.TryParse(balance.GetParsedText(), out	 balance_interno);
+		
+		if(retirar.text ==""){
+			msg_error.text ="Debe ingresar una cantidad para hacer un retiro válido.";
+			msg_error.color = new Color32 (10,255,76,136);
+			return;
+			
+		}
+		
 		retirar_interno = float.Parse(retirar.text);
 		balance_interno = float.Parse(balance.text);
 		 
-		resultado_interno = balance_interno - retirar_interno;
-		Debug.Log("El balance es : " + balance_interno + "Y la cantidad ingresada es de : " + retirar_interno + ", y el resultado de esta acción es de : " + resultado_interno);
+		//balance_interno = Mathf.Clamp(balance_interno,Min, Max);
+	
+			if (retirar_interno > balance_interno)
+		{
+				msg_error.text = "La cantida " + retirar.text +"$ excede su balance actual de " + balance.text + "$ pesos";
+			msg_error.color = new Color32(255,0,0,100);
+			retirar.text ="";
+			return;
+		}
+			else if (retirar_interno > 0){
+			resultado_interno = balance_interno - retirar_interno;
+			msg_error.text="";
+				balance.text=resultado_interno.ToString();
+				return;
+			} else
+			{
+				msg_error.text = "No puede retirar la cantidad de " + retirar.text + " pesos";
+				msg_error.color = new Color32(255,0,0,100);
+				retirar.text ="";
+				return;
+			}
+			
+		
+		Debug.Log("El balance es : " + balance.text + "Y la cantidad ingresada es de : " + retirar.text + ", y el resultado de esta acción es de : " + resultado_interno);
 
-		balance.text=resultado_interno.ToString();
+	
 	}
 
 	
+	
+	
+	// Update is called every frame, if the MonoBehaviour is enabled.
+	protected void Update()
+	{ 
+	
+	}
 
 
 
