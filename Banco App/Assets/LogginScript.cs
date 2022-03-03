@@ -8,9 +8,12 @@ using TMPro;
 public class LogginScript : MonoBehaviour
 {
 	
+	public TextMesh miTexto;
+	
 	[Header("Distintas interfaces de las app")]
-	public GameObject LoginScreen;
+	public GameObject LoginScreen ;
 	public GameObject MainScreen;
+	public GameObject TranssactionScreen;
 	
 	[Header("Objetos del LoginScreen")]
 	public TMP_InputField DNI;
@@ -28,6 +31,8 @@ public class LogginScript : MonoBehaviour
 	public TMP_InputField retirar;
 	public  Button retirar_btn;
 	public TMP_Text msg_error;
+	public Button historial;
+	public Button salir;
 	
 	[Header("Variables MainScreen Internas")]
 	public float balance_interno;
@@ -41,16 +46,22 @@ public class LogginScript : MonoBehaviour
   
   
 	[Header("Variables extras")]
-	float Min;
-	float Max;
+	float Min = 12;
+	float Max= 12;
   
   
   
 	  void Start()
 	{
+		miTexto= gameObject.AddComponent<TextMesh>();
+		miTexto.text="Esta funcionando";
+		miTexto.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font ;
+		
+		miTexto.fontSize = 60;
 		//Asigno las pantallas
 	    LoginScreen =GameObject.Find("LoginScreen");
-	    MainScreen = GameObject.Find("MainScreen");
+		MainScreen = GameObject.Find("MainScreen");
+		TranssactionScreen= GameObject.Find("TransaccionesScreen");
 	
 	    
 		//Asigno valores del LoginScreen
@@ -75,6 +86,8 @@ public class LogginScript : MonoBehaviour
 		
 		retirar_btn = GameObject.Find("Button Retirar").GetComponent<Button>();
 		msg_error = GameObject.Find("Text (TMP)MsgError").GetComponent<TMP_Text>();
+		historial = GameObject.Find("ButtonHistorial").GetComponent<Button>();
+		salir =  GameObject.Find("ButtonSalir").GetComponent<Button>();
 		
 		
 			//oculto pantallas
@@ -86,6 +99,13 @@ public class LogginScript : MonoBehaviour
 		//Llamo a la función RetirarSaldo
 		retirar_btn.onClick.AddListener(RetirarFondos);
 		
+		//Cerrar sesión
+		salir.onClick.AddListener(CerrarSesion);
+		
+		
+		//Navegar a HistorialScreen
+		historial.onClick.AddListener(NavegarHistorial);
+		
     }
 
 
@@ -93,6 +113,8 @@ public class LogginScript : MonoBehaviour
 	void ActivarScreen (GameObject PantallaActiva){
 		LoginScreen.SetActive(false);
 		MainScreen.SetActive(false);
+		TranssactionScreen.SetActive(false);
+	
 		PantallaActiva.SetActive(true);
 	}
 	
@@ -163,6 +185,13 @@ public class LogginScript : MonoBehaviour
 	
 	}
 
+	void CerrarSesion(){
+			ActivarScreen(LoginScreen);
+	}
+	
+	void NavegarHistorial(){
+		ActivarScreen(TranssactionScreen);
+	}
 	
 	
 	
@@ -171,17 +200,5 @@ public class LogginScript : MonoBehaviour
 	{ 
 	
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

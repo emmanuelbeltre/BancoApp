@@ -5,9 +5,7 @@ ScriptsOnlyBuild:
     ScriptInspector.dll:
     - FGTextBuffer
     - FGTextBufferManager
-    - ScriptInspector.FGCodeWindow
     - ScriptInspector.FGConsole
-    - ScriptInspector.ScriptInspector
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
@@ -427,7 +425,7 @@ ScriptsOnlyBuild:
     className: ActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: e662cbcf0e4b02d162ae685c1f450578
+      Hash: 16acc63cc5df4582c11160a56a1d79db
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LogginScript
@@ -536,4 +534,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/the_s/OneDrive/Escritorio/Unity/Banco App/Banco 1.0.apk
+  playerPath: C:/Users/the_s/OneDrive/Escritorio/Banco app 3.0.apk
