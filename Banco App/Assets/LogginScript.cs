@@ -12,7 +12,7 @@ public class LogginScript : MonoBehaviour
 	
 	[Header("Distintas interfaces de las app")]
 	public GameObject LoginScreen ;
-	public GameObject MainScreen;
+	public GameObject MainScreen; 
 	public GameObject TranssactionScreen;
 	
 	[Header("Objetos del LoginScreen")]
@@ -20,6 +20,7 @@ public class LogginScript : MonoBehaviour
 	public TMP_InputField password;
 	public TMP_Text incorrecto;
 	public Button loggin_btn;
+
 		
 		
 		
@@ -40,21 +41,26 @@ public class LogginScript : MonoBehaviour
 	public float resultado_interno;
 	
 	
+	
+	[Header("Objetos del Transactions Screen")]
+	public Button volver;
+	public Button salirHistorial;
+	public TMP_Text transaccionesHistorial;
+	
 	[Header("Credenciales")]
 	public string user_pass ;
 	public string user_dni;
   
   
 	[Header("Variables extras")]
-	float Min = 12;
-	float Max= 12;
-  
+	public	string [] arreglo = new string[10];
+	public string resultado_arreglo;
   
   
 	  void Start()
 	{
 		miTexto= gameObject.AddComponent<TextMesh>();
-		miTexto.text="Esta funcionando";
+		miTexto.text="Está funcionando";
 		miTexto.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font ;
 		
 		miTexto.fontSize = 60;
@@ -64,25 +70,24 @@ public class LogginScript : MonoBehaviour
 		TranssactionScreen= GameObject.Find("TransaccionesScreen");
 	
 	    
-		//Asigno valores del LoginScreen
+		//Asigno objetos / valores del LoginScreen
 		DNI	= GameObject.Find("InputField (TMP)DNI"). GetComponent<TMP_InputField>();
 		password = GameObject.Find("InputField (TMP)Password").GetComponent<TMP_InputField>();
 		incorrecto = GameObject.Find("Text (TMP)incorrecto").GetComponent<TMP_Text>();
 		loggin_btn = GameObject.Find("Button Login").GetComponent<Button>();
-		user_dni = "1";
-		user_pass = "1";
+		
+		user_dni = "Emma";
+		user_pass = "123";
 		
 		
-		//Asigno valores del main Screen
+		//Asigno onjetos / valores del main Screen
 		hora = GameObject.Find("Text (TMP) lastConnection").GetComponent<TMP_Text>();
 		transacciones_btn = GameObject.Find("Button Login").GetComponent<Button>();
 		balance =  GameObject.Find("Text (TMP)Balance").GetComponent<TMP_Text>();
 		usuario_iniciado = GameObject.Find("Text (TMP)UsernameLogged").GetComponent<TMP_Text>();
 		
 		retirar = GameObject.Find("InputField (TMP) Reterirar").GetComponent<TMP_InputField>();
-		retirar.characterValidation =	TMP_InputField.CharacterValidation.Decimal;
-		//retirar.onValueChanged.AddListener(msg_error.text="");
-		
+		retirar.characterValidation =	TMP_InputField.CharacterValidation.Decimal;	
 		
 		retirar_btn = GameObject.Find("Button Retirar").GetComponent<Button>();
 		msg_error = GameObject.Find("Text (TMP)MsgError").GetComponent<TMP_Text>();
@@ -90,8 +95,12 @@ public class LogginScript : MonoBehaviour
 		salir =  GameObject.Find("ButtonSalir").GetComponent<Button>();
 		
 		
-			//oculto pantallas
-		ActivarScreen(LoginScreen);
+		//Asigno los objetos/valores del Transacton Screen
+		volver = GameObject.Find("ButtonVolver").GetComponent<Button>();
+		salirHistorial = GameObject.Find("ButtonSalirHistorial").GetComponent<Button>();
+		transaccionesHistorial = GameObject.Find("Text (TMP)TransaccionesHistorial").GetComponent<TMP_Text>();
+		//oculto pantallas
+		ActivarScreen(TranssactionScreen);
 		
 		//Llamo a la función iniciar sesion
 		loggin_btn.onClick.AddListener(IniciarSesion);
@@ -105,6 +114,13 @@ public class LogginScript : MonoBehaviour
 		
 		//Navegar a HistorialScreen
 		historial.onClick.AddListener(NavegarHistorial);
+		
+		//boton Volver a MainScreen
+		volver.onClick.AddListener(NavegarMainScreen);
+		
+		//boton cerrar sesión desde transactions screen
+		salirHistorial.onClick.AddListener(CerrarSesion);
+		
 		
     }
 
@@ -141,6 +157,8 @@ public class LogginScript : MonoBehaviour
 
 	
 	void RetirarFondos (){
+		
+		Debug.Log(arreglo.Length);
 		//balance.text = balance. - retirar.text;
 		
 		//balance_interno = float.Parse(balance.text);
@@ -168,8 +186,23 @@ public class LogginScript : MonoBehaviour
 		}
 			else if (retirar_interno > 0){
 			resultado_interno = balance_interno - retirar_interno;
-			msg_error.text="";
+				msg_error.text="";
 				balance.text=resultado_interno.ToString();
+				
+				for (int i = 0; i < arreglo.Length; i++) {
+					
+				}
+			 
+				//transaccionesHistorial.text = retirar_interno.ToString();
+				
+				//for (int i = 0; i < arreglo.Length; i++) {
+				//	Debug.Log("Funciona");
+				//	arreglo[i]= transaccionesHistorial.text;
+					
+				//	transaccionesHistorial.text = arreglo[i];
+					
+				//	Debug.Log(arreglo[1]=transaccionesHistorial.text );
+				//}
 				return;
 			} else
 			{
@@ -194,11 +227,7 @@ public class LogginScript : MonoBehaviour
 	}
 	
 	
-	
-	// Update is called every frame, if the MonoBehaviour is enabled.
-	protected void Update()
-	{ 
-	
+	void NavegarMainScreen(){
+		ActivarScreen(MainScreen);
 	}
-
 }
