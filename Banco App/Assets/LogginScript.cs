@@ -20,6 +20,7 @@ public class LogginScript : MonoBehaviour
 	public TMP_InputField password;
 	public TMP_Text incorrecto;
 	public Button loggin_btn;
+	public Toggle recordar;
 
 		
 		
@@ -53,12 +54,14 @@ public class LogginScript : MonoBehaviour
   
   
 	[Header("Variables extras")]
-	public	string [] arreglo = new string[10];
+	public	string [] arreglo  ;
 	public string resultado_arreglo;
-  
+	public int currentIndex;
+	public string contenedor;
   
 	  void Start()
 	{
+		
 		miTexto= gameObject.AddComponent<TextMesh>();
 		miTexto.text="Está funcionando";
 		miTexto.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font ;
@@ -73,34 +76,45 @@ public class LogginScript : MonoBehaviour
 		//Asigno objetos / valores del LoginScreen
 		DNI	= GameObject.Find("InputField (TMP)DNI"). GetComponent<TMP_InputField>();
 		password = GameObject.Find("InputField (TMP)Password").GetComponent<TMP_InputField>();
+		//password.contentType = InputField.ContentType.Standard;
+		//password.inputType =InputField.ContentType.Password;
+		password.contentType=	TMP_InputField.ContentType.Password;
+		
+		password.characterValidation= TMP_InputField.CharacterValidation.Digit;
 		incorrecto = GameObject.Find("Text (TMP)incorrecto").GetComponent<TMP_Text>();
 		loggin_btn = GameObject.Find("Button Login").GetComponent<Button>();
-		
+		recordar = GameObject.Find("Toggle Remember").GetComponent<Toggle>();
 		user_dni = "Emma";
 		user_pass = "123";
 		
 		
 		//Asigno onjetos / valores del main Screen
-		hora = GameObject.Find("Text (TMP) lastConnection").GetComponent<TMP_Text>();
 		transacciones_btn = GameObject.Find("Button Login").GetComponent<Button>();
 		balance =  GameObject.Find("Text (TMP)Balance").GetComponent<TMP_Text>();
 		usuario_iniciado = GameObject.Find("Text (TMP)UsernameLogged").GetComponent<TMP_Text>();
-		
 		retirar = GameObject.Find("InputField (TMP) Reterirar").GetComponent<TMP_InputField>();
-		retirar.characterValidation =	TMP_InputField.CharacterValidation.Decimal;	
+		retirar.characterValidation =	TMP_InputField.CharacterValidation.Digit;	
 		
 		retirar_btn = GameObject.Find("Button Retirar").GetComponent<Button>();
 		msg_error = GameObject.Find("Text (TMP)MsgError").GetComponent<TMP_Text>();
 		historial = GameObject.Find("ButtonHistorial").GetComponent<Button>();
 		salir =  GameObject.Find("ButtonSalir").GetComponent<Button>();
-		
-		
+		hora = GameObject.Find("Text (TMP) lastConnection").GetComponent<TMP_Text>();
+		hora.color = new Color32(10,255,76,136);
+				
 		//Asigno los objetos/valores del Transacton Screen
 		volver = GameObject.Find("ButtonVolver").GetComponent<Button>();
 		salirHistorial = GameObject.Find("ButtonSalirHistorial").GetComponent<Button>();
 		transaccionesHistorial = GameObject.Find("Text (TMP)TransaccionesHistorial").GetComponent<TMP_Text>();
+		arreglo = new string[10]; 
+		
+		
+		Debug.Log(arreglo.Length);
+		
+		
+		
 		//oculto pantallas
-		ActivarScreen(TranssactionScreen);
+		ActivarScreen(LoginScreen);
 		
 		//Llamo a la función iniciar sesion
 		loggin_btn.onClick.AddListener(IniciarSesion);
@@ -146,6 +160,8 @@ public class LogginScript : MonoBehaviour
 		else	if (DNI.text == user_dni && password.text == user_pass)
 		{
 			ActivarScreen(MainScreen);
+			hora.text = System.DateTime.Now.ToString();
+			incorrecto.text ="";
 		
 		}else
 		{
@@ -185,16 +201,30 @@ public class LogginScript : MonoBehaviour
 			return;
 		}
 			else if (retirar_interno > 0){
+				
+				if (retirar_interno < 100)
+				{
+					msg_error.text = "No puede hacer retiros menores a 100$ pesos";
+					return;
+				}
+				if (retirar_interno % 100 !=0)
+				{
+					msg_error.text ="Cantidad invalidad, pruebe con tantidades como : ";
+					return;
+					
+				}
+				
 			resultado_interno = balance_interno - retirar_interno;
 				msg_error.text="";
 				balance.text=resultado_interno.ToString();
 				
-				for (int i = 0; i < arreglo.Length; i++) {
-					
-				}
-			 
-				//transaccionesHistorial.text = retirar_interno.ToString();
 				
+			 
+				contenedor =  contenedor +"Ha hecho una transacción de "+ retirar_interno.ToString() + " $ pesos el día " + System.DateTime.Now.ToString()+ "\n" + "\n"+ "\n" ;
+				
+				transaccionesHistorial.text = contenedor;
+				//retirar_interno  = retirar_interno + retirar_interno;
+				//transaccionesHistorial.text = retirar_interno.ToString();
 				//for (int i = 0; i < arreglo.Length; i++) {
 				//	Debug.Log("Funciona");
 				//	arreglo[i]= transaccionesHistorial.text;
@@ -213,13 +243,18 @@ public class LogginScript : MonoBehaviour
 			}
 			
 		
-		Debug.Log("El balance es : " + balance.text + "Y la cantidad ingresada es de : " + retirar.text + ", y el resultado de esta acción es de : " + resultado_interno);
+		//Debug.Log("El balance es : " + balance.text + "Y la cantidad ingresada es de : " + retirar.text + ", y el resultado de esta acción es de : " + resultado_interno);
 
 	
 	}
 
 	void CerrarSesion(){
-			ActivarScreen(LoginScreen);
+		ActivarScreen(LoginScreen);
+		if (!recordar.isOn)
+		{
+			DNI.text="";
+			password.text="";
+		}
 	}
 	
 	void NavegarHistorial(){

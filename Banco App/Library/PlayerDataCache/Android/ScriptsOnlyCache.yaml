@@ -27,7 +27,9 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.LayoutElement
+    - UnityEngine.UI.Mask
     - UnityEngine.UI.RectMask2D
+    - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
   sceneClasses:
@@ -82,6 +84,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2908}
     - Class: 114
       Script: {instanceID: 3564}
+    - Class: 114
+      Script: {instanceID: 3648}
+    - Class: 114
+      Script: {instanceID: 3782}
     - Class: 114
       Script: {instanceID: 3862}
     - Class: 114
@@ -425,7 +431,7 @@ ScriptsOnlyBuild:
     className: ActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: 16acc63cc5df4582c11160a56a1d79db
+      Hash: 7dfe689e4c542028498c1d81066da3b9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LogginScript
