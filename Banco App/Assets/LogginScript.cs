@@ -14,6 +14,7 @@ public class LogginScript : MonoBehaviour
 	public GameObject LoginScreen ;
 	public GameObject MainScreen; 
 	public GameObject TranssactionScreen;
+	public GameObject AlertScreen;
 	
 	[Header("Objetos del LoginScreen")]
 	public TMP_InputField DNI;
@@ -42,11 +43,18 @@ public class LogginScript : MonoBehaviour
 	public float resultado_interno;
 	
 	
-	
 	[Header("Objetos del Transactions Screen")]
 	public Button volver;
 	public Button salirHistorial;
 	public TMP_Text transaccionesHistorial;
+	
+	
+	[Header ("Objetos del Alert Screen")]
+	public Button cerrarAera;
+	public Button cerrarAlerta;
+	public string alertaEnPantalla;
+	public TMP_Text  mensajeAlerta;
+	
 	
 	[Header("Credenciales")]
 	public string user_pass ;
@@ -101,15 +109,20 @@ public class LogginScript : MonoBehaviour
 		salir =  GameObject.Find("ButtonSalir").GetComponent<Button>();
 		hora = GameObject.Find("Text (TMP) lastConnection").GetComponent<TMP_Text>();
 		hora.color = new Color32(10,255,76,136);
-				
+		
+		
 		//Asigno los objetos/valores del Transacton Screen
 		volver = GameObject.Find("ButtonVolver").GetComponent<Button>();
 		salirHistorial = GameObject.Find("ButtonSalirHistorial").GetComponent<Button>();
 		transaccionesHistorial = GameObject.Find("Text (TMP)TransaccionesHistorial").GetComponent<TMP_Text>();
-		arreglo = new string[10]; 
 		
 		
-		Debug.Log(arreglo.Length);
+		//Asigno los objetos/valores del Alert Screen
+		AlertScreen= GameObject.Find("MensajeAlertaScreen");
+		cerrarAera = GameObject.Find("Button de Area").GetComponent<Button>();
+		cerrarAlerta = GameObject.Find("ButtonCerraVentana").GetComponent<Button>();
+		mensajeAlerta = GameObject.Find("Text (TMP) MensajeAlerta").GetComponent<TMP_Text>();
+		
 		
 		
 		
@@ -135,7 +148,9 @@ public class LogginScript : MonoBehaviour
 		//boton cerrar sesión desde transactions screen
 		salirHistorial.onClick.AddListener(CerrarSesion);
 		
-		
+		//Cerrar Alerta
+		cerrarAera.onClick.AddListener(NavegarMainScreen);
+		cerrarAlerta.onClick.AddListener(NavegarMainScreen);
     }
 
 
@@ -144,6 +159,7 @@ public class LogginScript : MonoBehaviour
 		LoginScreen.SetActive(false);
 		MainScreen.SetActive(false);
 		TranssactionScreen.SetActive(false);
+		AlertScreen.SetActive(false);
 	
 		PantallaActiva.SetActive(true);
 	}
@@ -174,7 +190,7 @@ public class LogginScript : MonoBehaviour
 	
 	void RetirarFondos (){
 		
-		Debug.Log(arreglo.Length);
+	
 		//balance.text = balance. - retirar.text;
 		
 		//balance_interno = float.Parse(balance.text);
@@ -209,15 +225,22 @@ public class LogginScript : MonoBehaviour
 				}
 				if (retirar_interno % 100 !=0)
 				{
-					msg_error.text ="Cantidad invalidad, pruebe con tantidades como : ";
+					msg_error.text ="Cantidad invalidad, pruebe con cantidades como : \n \n 100$   300$    500$   1000$   20000$";
 					return;
 					
 				}
+				AlertScreen.SetActive(true	);
+				mensajeAlerta.text = "Sutransacción de " +  retirar_interno.ToString() + "$ Pesos se ha procesado con éxito en la fecha :   " + System.DateTime.Now.ToString() + "\n \n" + "¡GRACIAS POR UTILIZAR NUESTROS SERVICIOS!";
+				resultado_interno = balance_interno - retirar_interno;
 				
-			resultado_interno = balance_interno - retirar_interno;
+				
 				msg_error.text="";
 				balance.text=resultado_interno.ToString();
-				
+				retirar.text="";
+			
+			
+			
+			
 				
 			 
 				contenedor =  contenedor +"Ha hecho una transacción de "+ retirar_interno.ToString() + " $ pesos el día " + System.DateTime.Now.ToString()+ "\n" + "\n"+ "\n" ;
@@ -265,4 +288,5 @@ public class LogginScript : MonoBehaviour
 	void NavegarMainScreen(){
 		ActivarScreen(MainScreen);
 	}
+	
 }

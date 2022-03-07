@@ -2252,19 +2252,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 632962569}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1707767277}
   - {fileID: 1939195398}
-  m_Father: {fileID: 1270244091}
+  m_Father: {fileID: 1717699509}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 22.438517}
-  m_SizeDelta: {x: -101.7021, y: 424.9719}
+  m_AnchoredPosition: {x: 0, y: 54}
+  m_SizeDelta: {x: -105.2766, y: 574.3409}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &632962571
 MonoBehaviour:
@@ -3248,6 +3248,7 @@ MonoBehaviour:
   LoginScreen: {fileID: 0}
   MainScreen: {fileID: 0}
   TranssactionScreen: {fileID: 0}
+  AlertScreen: {fileID: 0}
   DNI: {fileID: 0}
   password: {fileID: 0}
   incorrecto: {fileID: 0}
@@ -3268,6 +3269,10 @@ MonoBehaviour:
   volver: {fileID: 0}
   salirHistorial: {fileID: 0}
   transaccionesHistorial: {fileID: 0}
+  cerrarAera: {fileID: 0}
+  cerrarAlerta: {fileID: 0}
+  alertaEnPantalla: 
+  mensajeAlerta: {fileID: 0}
   user_pass: 
   user_dni: 
   arreglo: []
@@ -4977,7 +4982,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469453424}
-  - {fileID: 632962570}
   m_Father: {fileID: 1717699509}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6498,6 +6502,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1270244091}
+  - {fileID: 632962570}
   m_Father: {fileID: 1128329248}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7387,7 +7392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.8847, y: -72.2711}
+  m_AnchoredPosition: {x: -7, y: 73}
   m_SizeDelta: {x: 876.5106, y: 174.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1939195399
